@@ -1,0 +1,74 @@
+<--------------------------------------------Geeky Ashima ------------------------------------------------------------>
+population<-c(rnorm(1000, mean=10, sd=4))
+rnd_sample40<-c(sample(population, 40))
+rnd_sample20<-c(sample(population, 20))
+
+pop<-population
+dim(pop)<-c(250, 4)
+cl_sample40<-pop[sample(nrow(pop), 10), ]
+cl_sample20<-pop[sample(nrow(pop), 5), ]
+
+dummy_sample40<-pop[sample(nrow(pop), 20), ]
+dummy_sample20<-pop[sample(nrow(pop), 10), ]
+st_sample40<-dummy_sample40[, sample(ncol(dummy_sample40), 2)]
+st_sample20<-dummy_sample20[, sample(ncol(dummy_sample20), 2)]
+
+n1<-40
+n2<-20
+
+cat("\nwhen sigma isknown n=40")
+
+mean_rnd_sample40<-mean(rnd_sample40)
+cat("\n\n\t\t\t\t\t\tConfidence is 95%")
+cat("\n\n\t\t size = 40, sd known")
+
+rnd_error40<-qt(0.975, df=n1-1)*2/sqrt(n1)
+rnd_left40<-mean_rnd_sample40 - rnd_error40
+rnd_right40<-mean_rnd_sample40 + rnd_error40
+cat("\nConfidence interval for random sample is", rnd_left40, rnd_right40)
+
+mean_st_sample40<-mean(st_sample40)
+st_error40<-qt(0.975, df=n1-1)*2/sqrt(n1)
+st_left40<-mean_st_sample40 - st_error40
+st_right40<-mean_st_sample40 + st_error40
+cat("\nConfidence interval for stratified sample is", st_left40, st_right40)
+
+mean_cl_sample40<-mean(cl_sample40)
+cl_error40<-qt(0.975, df=n1-1)*2/sqrt(n1)
+cl_left40<-mean_cl_sample40 - cl_error40
+cl_right40<-mean_cl_sample40 + cl_error40
+cat("\nConfidence interval for clustered sample is", cl_left40, cl_right40)
+
+
+cat("\n\n\n\nwhen sigma is unknown n=20")
+mean_rnd_sample20<-mean(rnd_sample20)
+sd_rnd_sample20<-sd(rnd_sample20)
+rnd_error20<-qt(0.975, df=n2-1)*sd_rnd_sample20/sqrt(n2)
+rnd_left20<-mean_rnd_sample20 - rnd_error20
+rnd_right20<-mean_rnd_sample20 + rnd_error20
+cat("\n Confidence interval for random  sample is", rnd_left20, rnd_right20)
+
+mean_st_sample20<-mean(st_sample20)
+sd_st_sample20<-sd(st_sample20)
+st_error20<-qt(0.975, df=n2-1)*sd_st_sample20/sqrt(n2)
+st_left20<-mean_st_sample20 - st_error20
+st_right20<-mean_st_sample20 + st_error20
+cat("\n Confidence interval for stratified sample is", st_left20, st_right20)
+
+mean_cl_sample20<-mean(cl_sample20)
+sd_cl_sample20<-sd(cl_sample20)
+cl_error20<-qt(0.975, df=n2-1)*sd_cl_sample20/sqrt(n2)
+cl_left20<-mean_cl_sample20 - cl_error20
+cl_right20<-mean_cl_sample20 + cl_error20
+cat("\n Confidence interval for clustered sample is", cl_left20, cl_right20)
+
+cat("\n\n\n\n chi-square test")
+chiInterval =  function(x,  cl){
+  df = length(x)-1
+  chilower = qchisq((cl)/2, df)
+  chiupper = qchisq((1-cl)/2, df, lower.tail = FALSE)
+  v = var(x)
+  print(c(df*v/chiupper, df*v/chilower))
+}
+cat("\n Confidence interval for random sample")
+chiInterval(rnd_sample20, 0.99)
