@@ -1,0 +1,57 @@
+<------------------------------------------------------Geeeky Ashima --------------------------------------------------------->
+get_symbols<-function(){
+  wheel<-c("DD","7","BBB","BB","B","C","0")
+  sample(wheel,size=3,replace=TRUE,prob=c(0.1,0.1,0.1,0.1,0.1,0.1,0.4))
+}
+
+newplayer<-function(){
+  money<<-100
+  mymoney <<- vector()
+  i<<-0
+}
+
+
+bid<-function(){
+  i<<-(i+1)
+  t<-play()
+  cat("Your money before bidding...", money, "\n")
+  money
+  money<<-money + t -1
+  cat("Your money after bidding...", money, "\n")
+  mymoney[i]<<-money
+}
+
+show_my_plot<-function(){
+  plot(mymoney)
+}
+
+play<-function(){
+ symbols<-get_symbols()
+ print(noquote(symbols))
+ s<-score(symbols)
+ cat("  WIN...", s, "\n")
+ s
+}
+
+score<-function(symbols){
+  if(symbols[1]=="DD" && symbols[2]=="DD" && symbols[3]=="DD")
+   { myscore<-100}
+  else if(symbols[1]=="7" && symbols[2]=="7" && symbols[3]=="7")
+    {myscore<-80}
+    else if(symbols[1]=="BBB" && symbols[2]=="BBB" && symbols[3]=="BBB")
+     {myscore<-40}
+      else if(symbols[1]=="BB" && symbols[2]=="BB" && symbols[3]=="BB")
+        {myscore<-25}
+       else if(symbols[1]=="B" && symbols[2]=="B" && symbols[3]=="B")
+         { myscore<-10}
+        else if(symbols[1]=="C" && symbols[2]=="C" && symbols[3]=="C")
+           { myscore<-10}
+           else if(symbols[1]=="C" && symbols[2]=="C"|| symbols[2]=="C" && symbols[3]=="C"||symbols[1]=="C" && symbols[3]=="C")
+             {myscore<-5}
+              else  if(symbols[1] =='C'||symbols[2]=='C'||symbols[3]=='C')
+                {myscore<-2}
+                   else
+                     { (myscore<-0)}
+}
+
+cat("If you are a newplayer then type newplayer() and then bid() and show_my_plot() to view your trend")
