@@ -1,0 +1,73 @@
+<------------------------------------------------------Geeky Ashima----------------------------------------------------------->
+sample_data<-data.frame(
+  x=c(7,9, 11, 15, 14, 3, 8, 7), 
+  y=c(8, 2, 3, 4, 11, 5, 10, 12)
+  )
+
+cat("The data is exporting to myCSVfile.csv\n")
+write.table(sample_data,file="myCSVfile.csv",quote=T,append=F,sep=",",eol = "\n", na = "NA", dec = ".", row.names = T,col.names = T)
+cat("CSV file created!\n")
+cat("The data is importing from myCSVfile.csv\n")
+myCSVdata <- read.table("myCSVfile.csv", header = TRUE, sep=",")
+cat("Data from csv file\n")
+print(myCSVdata)
+
+install.packages("XLConnect")
+library(XLConnect)
+library(xlsx)
+cat("The data is exporting to myexcelfile.xlsx\n")
+write.xlsx(x = sample_data, file = "myexcelfile.xlsx",
+           sheetName = "TestSheet", row.names = FALSE)
+cat("Data is exported to myexcelfile.xlsx\n")
+cat("The data is importing to myexcelfile.xlsx\n")
+writeWorksheetToFile("myexcelfile.xlsx", data = sample_data, sheet = "Sheet 1",
+                     startRow = 1, startCol = 1)
+
+cat("Data from excel file\n")
+print(myexceldata)
+
+myMean<-function(x, ...)
+{
+  return(sum(x)/length(x))
+}
+
+cat("\nThe mean of x from myMean function is :", myMean(sample_data[, 1]))
+cat("\nThe mean of y from myMean function is :", myMean(sample_data[, 2]))
+
+myVariance<-function(x, ...)
+{
+  n<-length(x)
+  m<-mean(x)
+  return (sum((x-m)^2)*(1/(n-1)))
+}
+cat("\n\nThe variance of x from myVariance function is :", myVariance(sample_data[, 1]))
+cat("\nThe variance of y from myVariance function is :", myVariance(sample_data[, 2]))
+
+mymode<- function(x){
+  y <- as.factor(x)
+  freq <- summary(y)
+  mymode <- names(freq)[freq[names(freq)] == max(freq)]
+  as.numeric(mymode)
+}
+cat("\n\nThe mode of x from mymode function is :", mymode(sample_data[, 1]))
+cat("\nThe mode of y from mymode function is :", mymode(sample_data[, 2]))
+
+mymedian <- function(x) {
+   odd.even <- length(x)%%2
+   if (odd.even == 0)
+     (sort(x)[length(x)/2] + sort(x)[1 + length(x)/2])/2
+    else sort(x)[ceiling(length(x)/2)]
+  }
+cat("\n\nThe median of x from mymedian function is :", mymedian(sample_data[, 1]))
+cat("\nThe median of y from mymedian function is :", mymedian(sample_data[, 2]))
+
+old.par <- par(mfrow=c(1, 2))
+
+boxplot(sample_data$x, ylab='values of x in data frame', main='Boxplot Distribution of X')
+
+plot(sample_data$x, sample_data$y, xlab='Values from X', ylab='Values from Y', main='Scatter plot for data frame')
+
+cat("\n\nThe stem plot for the x vAriable in data frame")
+stem(sample_data[,1])
+
+par(old.par)
