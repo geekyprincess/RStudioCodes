@@ -1,6 +1,11 @@
 # RStudioCodes
 Hey, these are the codes I coded in R! Realized people don't really share their codes, so on a mission to make most of my stuff online available! :) 
-<-----------------------------------------------------------Coded by Geeky Ashima!------------------------------------------------->
+
+<<<<<<<<<<<<<< This project has been coded by geekyprincess(aka Ashima) >>>>>>>>>>>>>>>>
+
+To know more about me, visit my linkedIn profile: https://in.linkedin.com/in/goelashima
+
+
 Codes are on following topics!
 1) Loaded Die 
 2) Deck of Cards and shuffling
